@@ -1,279 +1,310 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="露營地圖 - 提供一站式營地代辦、法規輔導與行銷曝光服務，協助營地主打造合法且具品牌力的露營場域。">
-  <meta name="keywords" content="露營, 營地代辦, 露營法規, 露營行銷, 露營地圖">
-  <title>露營地圖 | 營地代辦與行銷服務</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/684/684908.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>露營地圖｜花蓮營地代辦與行銷服務</title>
+  <meta name="description" content="露營地圖（花蓮）提供營地代辦、法規輔導、行銷曝光的一站式服務。從文件送審到品牌官網與社群導流，協助營地主快速合法上線並擴大曝光。" />
+  <meta name="keywords" content="露營, 營地代辦, 花蓮, 露營法規, 營地申請, 露營行銷, 露營地圖" />
+  <meta name="theme-color" content="#0f6b2f" />
+
+  <!-- Favicon（可自行換圖） -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/684/684908.png" type="image/png" />
+
   <style>
-    :root {
-      --green: #0f6b2f;
-      --green-dark: #0c5225;
-      --light: #f7faf8;
-      --shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      --transition: all 0.25s ease;
+    :root{
+      --green:#0f6b2f; --green-d:#0c5225; --light:#f7faf8; --dark:#1c1c1c;
+      --brand:#ffb703; --muted:#eef3ef; --shadow:0 10px 30px rgba(0,0,0,.12);
+      --radius:14px; --t: .25s cubic-bezier(.2,.8,.2,1);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Noto Sans TC", Arial, sans-serif;
-      background-color: #f5f5f5;
-      color: #1c1c1c;
-      scroll-behavior: smooth;
-    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{font-family:system-ui,-apple-system,"Segoe UI",Arial,"Noto Sans TC",sans-serif;background:#f5f5f5;color:var(--dark);line-height:1.6}
 
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: var(--green);
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-    .nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 60px;
-      padding: 0 18px;
-    }
-    .logo a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 20px;
-    }
+    /* Utility */
+    .container{max-width:1100px;margin:auto;padding:0 18px}
+    .section{padding:56px 0}
+    h1,h2,h3{line-height:1.25;margin:0 0 .5em}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#102a12;text-decoration:none;
+         font-weight:700;padding:12px 20px;border-radius:10px;transition:transform var(--t),filter var(--t)}
+    .btn:hover{transform:translateY(-2px);filter:brightness(.95)}
+    .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
-    /* Nav menu */
-    nav ul {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      transition: var(--transition);
-    }
-    nav a:hover {
-      background: rgba(255,255,255,0.15);
-    }
+    /* Header / Nav */
+    header{position:sticky;top:0;z-index:1000;background:var(--green);color:#fff;backdrop-filter:saturate(140%) blur(6px)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .logo a{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.5px;font-size:20px}
+    nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;align-items:center}
+    nav a{color:#fff;text-decoration:none;padding:12px 14px;border-radius:10px;transition:background var(--t)}
+    nav a:hover{background:rgba(255,255,255,.12)}
+    .hamburger{display:none;color:#fff;font-size:24px;cursor:pointer;user-select:none}
 
-    /* Dropdown */
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      min-width: 200px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      animation: fadeIn 0.2s ease;
-    }
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
-    .dropdown-menu a {
-      color: var(--green);
-      display: block;
-      padding: 12px 14px;
-      transition: var(--transition);
-    }
-    .dropdown-menu a:hover {
-      background: var(--light);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Dropdown (desktop hover) */
+    .dropdown{position:relative}
+    .dropdown>a::after{content:"▾";margin-left:6px}
+    .menu{display:none;position:absolute;left:0;top:100%;min-width:220px;background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+    .menu a{display:block;color:var(--green);padding:12px 14px}
+    .menu a:hover{background:var(--light)}
+    .dropdown:hover .menu{display:block}
 
     /* 燈燈 */
-    .blink-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ff4d4f;
-      margin-left: 5px;
-      box-shadow: 0 0 0 rgba(255, 77, 79, 0.6);
-      animation: blink 1.2s infinite;
-      display: inline-block;
-      vertical-align: middle;
+    .blink-dot{
+      width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:6px;background:#ff4d4f;
+      box-shadow:0 0 0 rgba(255,77,79,.6);vertical-align:middle;animation:ping 1.2s infinite
     }
-    @keyframes blink {
-      0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+    @keyframes ping{
+      0%{box-shadow:0 0 0 0 rgba(255,77,79,.6)}
+      70%{box-shadow:0 0 0 12px rgba(255,77,79,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,77,79,0)}
     }
 
     /* Hero */
-    .hero {
-      background: linear-gradient(rgba(15,107,47,0.8), rgba(15,107,47,0.8)), url('https://picsum.photos/1200/420?camping') center/cover;
-      color: #fff;
-      text-align: center;
-      padding: 90px 20px;
+    .hero{
+      color:#fff; background:
+        linear-gradient(rgba(15,107,47,.85),rgba(15,107,47,.75)),
+        url('https://images.unsplash.com/photo-1504280390368-3971cd137e81?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat fixed;
     }
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
-    }
-    .btn {
-      background: #ffb703;
-      color: #102a12;
-      font-weight: 700;
-      padding: 12px 22px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: var(--transition);
-      display: inline-block;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      background: #ffd166;
-    }
+    .hero .container{padding:88px 18px 96px;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+    .hero h1{font-size:40px}
 
-    /* Content */
-    section {
-      padding: 50px 0;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 0 20px;
-    }
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-    }
+    /* Services */
+    .grid{display:grid;gap:18px}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .service .card{transition:transform var(--t), box-shadow var(--t)}
+    .service .card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.18)}
+    .service h3{margin-bottom:.35em}
 
-    footer {
-      background: var(--green-dark);
-      color: #fff;
-      text-align: center;
-      padding: 20px;
+    /* Contact */
+    .contact .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form .full{grid-column:1/-1}
+    .form label{display:block;font-size:14px;margin-bottom:6px;color:#335}
+    .form input,.form textarea{
+      width:100%;padding:12px 12px;border:1px solid #dfe6e1;border-radius:10px;background:#fff;outline:none;transition:border var(--t), box-shadow var(--t)
     }
+    .form input:focus,.form textarea:focus{border-color:#86c5a6;box-shadow:0 0 0 3px rgba(134,197,166,.25)}
+    .form textarea{min-height:120px;resize:vertical}
 
-    /* 手機選單 */
-    .menu-toggle {
-      display: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #fff;
-    }
-    @media (max-width: 900px) {
-      nav ul {
-        flex-direction: column;
-        background: var(--green-dark);
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        display: none;
-        padding: 10px 0;
-      }
-      nav ul.active { display: flex; }
-      .menu-toggle { display: block; }
-      .dropdown-menu {
-        position: static;
-        box-shadow: none;
-        background: var(--green-dark);
-      }
-      .dropdown-menu a { color: #fff; }
+    /* Map */
+    .map-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#ccc}
+    .map-ratio{position:relative;padding-top:56.25%}
+    .map-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    /* Footer */
+    footer{background:var(--green-d);color:#fff;padding:36px 0;margin-top:24px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    .footer h4{margin:.2em 0  .6em}
+    .social{display:flex;gap:10px;margin-top:10px}
+    .social a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;
+              background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);text-decoration:none}
+    .social a:hover{background:rgba(255,255,255,.18)}
+    .copy{margin-top:14px;font-size:13px;opacity:.85}
+
+    /* Responsive */
+    @media (max-width:1000px){ .grid-3{grid-template-columns:repeat(2,1fr)} .footer-grid{grid-template-columns:1fr 1fr} }
+    @media (max-width:720px){
+      .hero h1{font-size:32px}
+      /* mobile menu */
+      .hamburger{display:block}
+      nav ul{position:absolute;left:0;right:0;top:64px;background:var(--green);flex-direction:column;display:none;padding:10px 0;border-top:1px solid rgba(255,255,255,.15)}
+      nav ul.active{display:flex}
+      .menu{position:static;display:none;background:var(--green-d);box-shadow:none;border-radius:0}
+      .menu a{color:#fff}
+      .dropdown>a::after{content:"▸";float:right}
+      .open>.menu{display:block}
+      .open>a::after{content:"▾"}
+      .contact .form{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="nav">
-    <div class="logo"><a href="#">露營地圖</a></div>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <nav>
-      <ul id="menu">
-        <li><a href="#home">首頁</a></li>
-        <li class="dropdown">
-          <a href="#service">服務<span class="blink-dot" title="新功能"></span></a>
-          <div class="dropdown-menu">
-            <a href="#apply">場地代辦</a>
-            <a href="#law">法規輔導</a>
-            <a href="#marketing">行銷曝光</a>
-          </div>
-        </li>
-        <li><a href="#cases">成功案例</a></li>
-        <li><a href="#news">最新消息</a></li>
-        <li><a href="#contact">聯絡我們</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<section id="home" class="hero">
-  <h1>打造你的專屬露營品牌</h1>
-  <p>從法規申請到行銷曝光，一站式輔導服務。</p>
-  <a href="#contact" class="btn">立即諮詢</a>
-</section>
-
-<section id="service">
-  <div class="container">
-    <h2>我們的服務</h2>
-    <div class="card-grid">
-      <div class="card"><h3>場地代辦</h3><p>從文件準備、送審到執照取得，專人協助縮短時程。</p></div>
-      <div class="card"><h3>法規輔導</h3><p>針對各縣市規範提供改善建議與合法申報流程。</p></div>
-      <div class="card"><h3>行銷曝光</h3><p>協助營地主打造品牌、網站與社群行銷策略。</p></div>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo"><a href="#home">露營地圖</a></div>
+      <div id="hb" class="hamburger" aria-label="開啟選單" aria-expanded="false">☰</div>
+      <nav>
+        <ul id="menu">
+          <li><a href="#home">首頁</a></li>
+          <li class="dropdown">
+            <a href="#service">服務 <span class="blink-dot" title="新功能"></span></a>
+            <div class="menu">
+              <a href="#apply">場地代辦</a>
+              <a href="#law">法規輔導</a>
+              <a href="#marketing">行銷曝光</a>
+            </div>
+          </li>
+          <li><a href="#cases">成功案例</a></li>
+          <li><a href="#news">最新消息</a></li>
+          <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="news" style="background:#f7faf8;">
-  <div class="container">
-    <h2>最新消息</h2>
-    <ul>
-      <li>📅 2025/11/10　推出「營地360°空拍展示」新服務</li>
-      <li>🌿 2025/10/05　「營地主經營講座」開放報名</li>
-    </ul>
-  </div>
-</section>
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>打造你的專屬露營品牌</h1>
+      <p>從法規申請到行銷曝光，一站式輔導服務（花蓮）。</p>
+      <a href="#contact" class="btn">立即諮詢</a>
+    </div>
+  </section>
 
-<section id="contact">
-  <div class="container">
-    <h2>聯絡我們</h2>
-    <p>📧 Email：service@example.com ｜ 📞 Line：@camp</p>
-  </div>
-</section>
+  <!-- Services -->
+  <section id="service" class="section service">
+    <div class="container">
+      <h2>我們的服務</h2>
+      <p>依照各縣市規範與場域條件，提供最合適的合規與品牌策略方案。</p>
+      <div class="grid grid-3" style="margin-top:16px">
+        <div class="card" id="apply">
+          <h3>場地代辦</h3>
+          <p>彙整申請文件、送審與追蹤，縮短等待時程並降低來回成本。</p>
+        </div>
+        <div class="card" id="law">
+          <h3>法規輔導</h3>
+          <p>針對花蓮與鄰近地區規範，提供改善建議與合規清單，從源頭避開風險。</p>
+        </div>
+        <div class="card" id="marketing">
+          <h3>行銷曝光</h3>
+          <p>品牌定位、官網/社群內容、攝影素材與投放方案，導入預約與評價。</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <p>© 2025 露營地圖 | 版權所有</p>
-</footer>
+  <!-- News (簡版) -->
+  <section id="news" class="section" style="background:var(--muted)">
+    <div class="container">
+      <h2>最新消息</h2>
+      <ul>
+        <li>2025/11/10　上線「營地 360° 空拍展示」加值服務</li>
+        <li>2025/10/05　花蓮營地主交流會開放報名</li>
+      </ul>
+    </div>
+  </section>
 
-<script>
-function toggleMenu(){
-  document.getElementById("menu").classList.toggle("active");
-}
-</script>
+  <!-- Contact + Map -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2>聯絡我們</h2>
+      <p>留下您的需求，我們將於 1–2 個工作天內回覆。</p>
 
+      <div class="grid" style="grid-template-columns:1.1fr .9fr; gap:18px; margin-top:16px">
+        <!-- 表單 -->
+        <div class="card">
+          <form id="contactForm" class="form" novalidate>
+            <div>
+              <label for="name">姓名</label>
+              <input id="name" name="name" type="text" placeholder="請輸入姓名" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="example@mail.com" required />
+            </div>
+            <div class="full">
+              <label for="msg">需求內容</label>
+              <textarea id="msg" name="message" placeholder="簡述所在地、基地現況與期程…" required></textarea>
+            </div>
+            <div class="full">
+              <button class="btn" type="submit">送出需求</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 地圖（花蓮） -->
+        <div class="map-wrap">
+          <div class="map-ratio">
+            <iframe
+              title="花蓮地圖"
+              src="https://www.google.com/maps?q=%E8%8A%B1%E8%93%AE&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3 style="margin-bottom:.25em">露營地圖</h3>
+        <p>花蓮在地的一站式營地服務團隊。從合規到行銷，讓你的營地穩定上線、被更多人看見。</p>
+        <div class="copy">© <span id="y"></span> 露營地圖</div>
+      </div>
+
+      <div>
+        <h4>快速連結</h4>
+        <ul style="list-style:none;padding:0;margin:0;line-height:2">
+          <li><a href="#service" style="color:#fff;text-decoration:none">服務內容</a></li>
+          <li><a href="#news" style="color:#fff;text-decoration:none">最新消息</a></li>
+          <li><a href="#contact" style="color:#fff;text-decoration:none">聯絡我們</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>追蹤我們</h4>
+        <div class="social">
+          <!-- 使用 # 佔位，之後把 href 換成你的連結即可 -->
+          <a href="#" aria-label="Facebook" title="Facebook">
+            <!-- FB SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.3V12h2.3V9.8c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.5.7-1.5 1.4V12h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" title="Instagram">
+            <!-- IG SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/></svg>
+          </a>
+          <a href="#" aria-label="LINE" title="LINE">
+            <!-- LINE SVG -->
+            <svg width="22" height="22" viewBox="0 0 48 48" fill="#fff" aria-hidden="true"><path d="M24 5C12.4 5 3 12.8 3 22c0 6.7 4.7 12.5 11.6 15.4-.4 1.4-1.5 5.3-1.8 6.1-.3 1 0 1 1 .6.8-.4 5-3.3 7.1-4.7 1 .1 2 .2 3.1.2 11.6 0 21-7.8 21-17.6S35.6 5 24 5z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 動態年份
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // 手機選單開關
+    const hb = document.getElementById('hb');
+    const menu = document.getElementById('menu');
+    hb.addEventListener('click', () => {
+      const open = menu.classList.toggle('active');
+      hb.setAttribute('aria-expanded', String(open));
+    });
+    // 手機：點主選單展開子選單
+    function wireMobileDropdown(){
+      const isMobile = window.matchMedia('(max-width:720px)').matches;
+      document.querySelectorAll('.dropdown > a').forEach(a=>{
+        a.onclick = isMobile ? (e)=>{ e.preventDefault(); a.parentElement.classList.toggle('open'); } : null;
+      });
+    }
+    wireMobileDropdown(); window.addEventListener('resize', wireMobileDropdown);
+
+    // 聯絡表單（示範用：前端驗證＋感謝提示）
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const msg = form.message.value.trim();
+      if(!name || !email || !msg){
+        alert('請完整填寫「姓名 / Email / 需求內容」。');
+        return;
+      }
+      // 沒有後端就顯示提示（之後可改成 mailto 或表單服務）
+      alert('已收到您的需求，我們將儘快與您聯繫。感謝！');
+      form.reset();
+    });
+  </script>
 </body>
 </html>
