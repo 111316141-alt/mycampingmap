@@ -1,163 +1,278 @@
-# See conversation for full script; placeholder for packaging<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>露營地圖示範頁</title>
-<style>
-  :root{
-    --green:#0f6b2f; --green-d:#0c5225; --light:#f7faf8; --shadow:0 8px 20px rgba(0,0,0,.12);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,"Noto Sans TC",sans-serif;background:#f5f5f5;color:#1c1c1c}
-  .wrapper{max-width:1100px;margin:auto;padding:0 18px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="露營地圖 - 提供一站式營地代辦、法規輔導與行銷曝光服務，協助營地主打造合法且具品牌力的露營場域。">
+  <meta name="keywords" content="露營, 營地代辦, 露營法規, 露營行銷, 露營地圖">
+  <title>露營地圖 | 營地代辦與行銷服務</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/684/684908.png" type="image/png">
+  <style>
+    :root {
+      --green: #0f6b2f;
+      --green-dark: #0c5225;
+      --light: #f7faf8;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      --transition: all 0.25s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans TC", Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #1c1c1c;
+      scroll-behavior: smooth;
+    }
 
-  /* 置頂導覽列 */
-  header#topbar{position:sticky;top:0;z-index:1000;background:var(--green);color:#fff}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:56px}
-  .logo a{color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:.5px}
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--green);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      padding: 0 18px;
+    }
+    .logo a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 20px;
+    }
 
-  /* 清單 */
-  #navlist{list-style:none;margin:0;padding:0;display:flex;gap:2px}
-  #navlist>li{position:relative}
-  #navlist a{display:block;color:#fff;text-decoration:none;padding:14px 16px}
-  #navlist a:hover,#navlist a:focus{background:rgba(255,255,255,.08)}
+    /* Nav menu */
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.15);
+    }
 
-  /* 下拉選單（桌機：滑過出現） */
-  .dropdown>a::after{content:"▾";margin-left:6px}
-  .menu{display:none;position:absolute;left:0;top:100%;min-width:220px;background:#fff;border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
-  .menu a{color:var(--green);padding:12px 14px}
-  .menu a:hover{background:var(--light)}
-  .dropdown:hover>.menu{display:block}
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeIn 0.2s ease;
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    .dropdown-menu a {
+      color: var(--green);
+      display: block;
+      padding: 12px 14px;
+      transition: var(--transition);
+    }
+    .dropdown-menu a:hover {
+      background: var(--light);
+    }
 
-  /* 「燈燈」小燈效果 */
-  .blink-dot{
-    width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:6px;
-    background:#ff4d4f;box-shadow:0 0 0 rgba(255,77,79,.7);vertical-align:middle;
-    animation:ping 1.2s infinite;
-  }
-  @keyframes ping{
-    0%{box-shadow:0 0 0 0 rgba(255,77,79,.7)}
-    70%{box-shadow:0 0 0 10px rgba(255,77,79,0)}
-    100%{box-shadow:0 0 0 0 rgba(255,77,79,0)}
-  }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  /* Hero 區 */
-  .hero{background:#0b3f1d url('https://picsum.photos/1200/420?random=8') center/cover no-repeat;color:#fff}
-  .hero .wrapper{padding:72px 18px 84px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
-  .btn{display:inline-block;background:#ffb703;color:#102a12;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:10px}
-  .btn:hover{filter:brightness(.95)}
+    /* 燈燈 */
+    .blink-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff4d4f;
+      margin-left: 5px;
+      box-shadow: 0 0 0 rgba(255, 77, 79, 0.6);
+      animation: blink 1.2s infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes blink {
+      0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+    }
 
-  /* 內容區 */
-  .section{padding:40px 0}
-  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-  .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:18px}
+    /* Hero */
+    .hero {
+      background: linear-gradient(rgba(15,107,47,0.8), rgba(15,107,47,0.8)), url('https://picsum.photos/1200/420?camping') center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 90px 20px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      background: #ffb703;
+      color: #102a12;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      background: #ffd166;
+    }
 
-  footer{background:var(--green);color:#fff;text-align:center;padding:18px}
+    /* Content */
+    section {
+      padding: 50px 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 0 20px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+    }
 
-  /* 手機版：漢堡選單與點擊展開下拉 */
-  .hamburger{display:none;color:#fff;cursor:pointer;user-select:none}
-  @media (max-width:900px){
-    .hamburger{display:block}
-    #navlist{display:none;position:absolute;left:0;right:0;top:56px;flex-direction:column;background:var(--green);border-top:1px solid rgba(255,255,255,.15)}
-    #navlist>li{width:100%}
-    .menu{position:static;display:none;background:var(--green-d);box-shadow:none;border-radius:0}
-    .menu a{color:#fff}
-    .dropdown>a::after{content:"▸";float:right}
-    .open>.menu{display:block}
-    .open>a::after{content:"▾"}
-  }
-</style>
+    footer {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* 手機選單 */
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      nav ul {
+        flex-direction: column;
+        background: var(--green-dark);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        display: none;
+        padding: 10px 0;
+      }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: block; }
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: var(--green-dark);
+      }
+      .dropdown-menu a { color: #fff; }
+    }
+  </style>
 </head>
 <body>
 
-<header id="topbar">
-  <div class="wrapper nav">
-    <div class="logo"><a href="#home">露營地圖</a></div>
-    <div class="hamburger" id="hb" aria-label="開啟選單" aria-expanded="false">☰ 選單</div>
-    <ul id="navlist">
-      <li><a href="#home">首頁</a></li>
-
-      <li class="dropdown">
-        <a href="#service">服務 <span class="blink-dot" title="新功能"></span></a>
-        <div class="menu">
-          <a href="#apply">場地代辦</a>
-          <a href="#marketing">行銷曝光</a>
-          <a href="#law">法規輔導</a>
-        </div>
-      </li>
-
-      <li class="dropdown">
-        <a href="#cases">成功案例</a>
-        <div class="menu">
-          <a href="#case1">山林營地</a>
-          <a href="#case2">海景營地</a>
-        </div>
-      </li>
-
-      <li><a href="#news">最新消息</a></li>
-      <li><a href="#contact">聯絡我們</a></li>
-    </ul>
+<header>
+  <div class="nav">
+    <div class="logo"><a href="#">露營地圖</a></div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav>
+      <ul id="menu">
+        <li><a href="#home">首頁</a></li>
+        <li class="dropdown">
+          <a href="#service">服務<span class="blink-dot" title="新功能"></span></a>
+          <div class="dropdown-menu">
+            <a href="#apply">場地代辦</a>
+            <a href="#law">法規輔導</a>
+            <a href="#marketing">行銷曝光</a>
+          </div>
+        </li>
+        <li><a href="#cases">成功案例</a></li>
+        <li><a href="#news">最新消息</a></li>
+        <li><a href="#contact">聯絡我們</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
 <section id="home" class="hero">
-  <div class="wrapper">
-    <h1>一站式營地輔導與行銷</h1>
-    <p>從法規諮詢、申請文件到網站曝光與訂位導流，全流程支援。</p>
-    <a class="btn" href="#contact">免費諮詢</a>
-  </div>
+  <h1>打造你的專屬露營品牌</h1>
+  <p>從法規申請到行銷曝光，一站式輔導服務。</p>
+  <a href="#contact" class="btn">立即諮詢</a>
 </section>
 
-<section id="service" class="section">
-  <div class="wrapper">
+<section id="service">
+  <div class="container">
     <h2>我們的服務</h2>
     <div class="card-grid">
-      <div class="card"><h3 id="apply">場地代辦</h3><p>彙整文件、送審與追蹤，縮短等待時程。</p></div>
-      <div class="card"><h3 id="marketing">行銷曝光</h3><p>多平台曝光、拍攝素材與社群經營，讓營地被看見。</p></div>
-      <div class="card"><h3 id="law">法規輔導</h3><p>依地方規範提供合規建議與改善清單。</p></div>
+      <div class="card"><h3>場地代辦</h3><p>從文件準備、送審到執照取得，專人協助縮短時程。</p></div>
+      <div class="card"><h3>法規輔導</h3><p>針對各縣市規範提供改善建議與合法申報流程。</p></div>
+      <div class="card"><h3>行銷曝光</h3><p>協助營地主打造品牌、網站與社群行銷策略。</p></div>
     </div>
   </div>
 </section>
 
-<section id="news" class="section" style="background:#f7faf8">
-  <div class="wrapper">
+<section id="news" style="background:#f7faf8;">
+  <div class="container">
     <h2>最新消息</h2>
     <ul>
-      <li>2025-11-10　開放「營地空拍」加值服務。</li>
-      <li>2025-10-12　推出營地主後台 Beta。</li>
+      <li>📅 2025/11/10　推出「營地360°空拍展示」新服務</li>
+      <li>🌿 2025/10/05　「營地主經營講座」開放報名</li>
     </ul>
   </div>
 </section>
 
-<section id="contact" class="section">
-  <div class="wrapper">
+<section id="contact">
+  <div class="container">
     <h2>聯絡我們</h2>
-    <p>Email：service@example.com　|　Line：@camp</p>
+    <p>📧 Email：service@example.com ｜ 📞 Line：@camp</p>
   </div>
 </section>
 
-<footer>© 2025 露營地圖示範頁（教學用途）</footer>
+<footer>
+  <p>© 2025 露營地圖 | 版權所有</p>
+</footer>
 
 <script>
-  // 手機版：漢堡選單開關
-  const hb = document.getElementById('hb');
-  const nav = document.getElementById('navlist');
-  hb.addEventListener('click', () => {
-    const isOpen = getComputedStyle(nav).display !== 'none';
-    nav.style.display = isOpen ? 'none' : 'flex';
-    hb.setAttribute('aria-expanded', String(!isOpen));
-  });
-
-  // 手機版：點擊展開/收合下拉
-  function wireMobileDropdown(){
-    const isMobile = window.matchMedia('(max-width:900px)').matches;
-    document.querySelectorAll('.dropdown > a').forEach(a=>{
-      a.onclick = isMobile ? (e)=>{ e.preventDefault(); a.parentElement.classList.toggle('open'); } : null;
-    });
-  }
-  wireMobileDropdown();
-  window.addEventListener('resize', wireMobileDropdown);
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("active");
+}
 </script>
 
 </body>
